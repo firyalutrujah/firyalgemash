@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pulau Seribu - Gen Z Style</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px;
+      background-color: #00acc1;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2em;
+    }
+
+    .slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 20px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .pulau-card {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      background-color: white;
+      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      min-width: 160px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .pulau-card:hover {
+      transform: scale(1.05);
+      background-color: #e0f7fa;
+    }
+
+    .info-box {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 16px;
+      background-color: #ffffff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .info-box img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .info-box h2 {
+      color: #006064;
+    }
+
+    .info-box ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌴 Jelajah Pulau-Pulau Keren di Kepulauan Seribu 🌴</h1>
+    <p>Swipe & klik pulau favoritmu!</p>
+  </header>
+
+  <div class="slider">
+    <div class="pulau-card" onclick="tampilkan('tidung')">Pulau Tidung</div>
+    <div class="pulau-card" onclick="tampilkan('pari')">Pulau Pari</div>
+    <div class="pulau-card" onclick="tampilkan('pramuka')">Pulau Pramuka</div>
+    <div class="pulau-card" onclick="tampilkan('macan')">Pulau Macan</div>
+    <div class="pulau-card" onclick="tampilkan('harapan')">Pulau Harapan</div>
+  </div>
+
+  <div id="info" class="info-box" style="display:none;">
+    <img id="gambar" src="" alt="Foto Pulau">
+    <h2 id="nama"></h2>
+    <p id="deskripsi"></p>
+    <h3>Sumber Daya Alam (SDA):</h3>
+    <ul id="sda"></ul>
+    <h3>Keunikan:</h3>
+    <p id="keunikan"></p>
+  </div>
+
+  <script>
+    const pulauData = {
+      tidung: {
+        nama: "Pulau Tidung",
+        gambar: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Jembatan_Cinta_Tidung.jpg/800px-Jembatan_Cinta_Tidung.jpg",
+        deskripsi: "Pulau dengan Jembatan Cinta ikonik, cocok untuk bersepeda, snorkeling, dan menikmati sunset.",
+        sda: ["Terumbu karang", "Ikan hias", "Mangrove", "Pohon kelapa"],
+        keunikan: "Jembatan cinta yang menghubungkan dua pulau, tempat cerita cinta dan mitos lokal."
+      },
+      pari: {
+        nama: "Pulau Pari",
+        gambar: "https://www.garuda-indonesia.com/assets/images/pariwisata/destination/pari_island.jpg",
+        deskripsi: "Pulau kecil dengan pantai pasir putih yang sangat bersih dan spot foto Instagramable.",
+        sda: ["Rumput laut", "Pasir putih", "Air jernih"],
+        keunikan: "Pantai Pasir Perawan yang tenang dan cocok untuk healing."
+      },
+      pramuka: {
+        nama: "Pulau Pramuka",
+        gambar: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Pulau_Pramuka.jpg/800px-Pulau_Pramuka.jpg",
+        deskripsi: "Pulau utama di Kepulauan Seribu, pusat konservasi penyu dan hutan mangrove.",
+        sda: ["Penyu sisik", "Mangrove", "Air bersih"],
+        keunikan: "Ada tempat penangkaran penyu dan pusat edukasi lingkungan."
+      },
+      macan: {
+        nama: "Pulau Macan",
+        gambar: "https://media-cdn.tripadvisor.com/media/photo-s/0e/d7/c2/89/pulau-macan-resort.jpg",
+        deskripsi: "Eco resort dengan konsep back to nature dan private beach vibes.",
+        sda: ["Tenaga surya", "Terumbu karang", "Laut bersih"],
+        keunikan: "Resort terapung ramah lingkungan yang aesthetic!"
+      },
+      harapan: {
+        nama: "Pulau Harapan",
+        gambar: "https://wisatakepulauanseribu.com/wp-content/uploads/2018/11/Pulau-Harapan-Kepulauan-Seribu.jpg",
+        deskripsi: "Pulau yang dekat dengan banyak pulau kecil lainnya, cocok untuk island hopping.",
+        sda: ["Ikan laut", "Terumbu karang", "Mangrove"],
+        keunikan: "Banyak spot snorkeling dan diving yang keren banget!"
+      }
+    };
+
+    function tampilkan(key) {
+      const data = pulauData[key];
+      document.getElementById("gambar").src = data.gambar;
+      document.getElementById("nama").textContent = data.nama;
+      document.getElementById("deskripsi").textContent = data.deskripsi;
+      document.getElementById("keunikan").textContent = data.keunikan;
+
+      // List SDA
+      const sdaList = document.getElementById("sda");
+      sdaList.innerHTML = "";
+      data.sda.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        sdaList.appendChild(li);
+      });
+
+      document.getElementById("info").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
+
